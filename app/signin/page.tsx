@@ -24,6 +24,18 @@ const Signin = () => {
     })
   }
 
+  function twitterLogin(e:any){
+    e.preventDefault();
+    try {
+      signIn("twitter", {
+        redirect: true,
+        callbackUrl: '/'
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className='w-full flex justify-center items-center mt-5'>
       <div className='border border-sky-900 p-5 rounded-md'>
@@ -46,6 +58,9 @@ const Signin = () => {
         </form>
         <form className='flex flex-col'>
           <button onClick={(e) => githubLogin(e)} className='bg-sky-900 text-gray-300 p-2 rounded-sm mt-2'>GitHub</button>
+        </form>
+        <form className='flex flex-col'>
+          <button onClick={(e) => twitterLogin(e)} className='bg-sky-900 text-gray-300 p-2 rounded-sm mt-2'>Twitter</button>
         </form>
       </div>
     </div>

@@ -2,6 +2,7 @@ import { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github"
 import { GithubProfile } from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
+import TwitterProvider from "next-auth/providers/twitter";
 
 export const options: NextAuthOptions = {
     pages: {
@@ -10,7 +11,7 @@ export const options: NextAuthOptions = {
     },
     providers:[
         GithubProvider({
-            profile(profile: GithubProfile){
+            profile(profile){
                 return {
                     ...profile,
                     role: profile?.role ?? "user" //  you can use this || insted of ??,
@@ -19,35 +20,14 @@ export const options: NextAuthOptions = {
             clientId: process.env.GITHUB_ID as string,
             clientSecret: process.env.GITHUB_SECRET as string,
         }),
+        TwitterProvider({
+            clientId: process.env.TWITTER_CLIENT_ID as string,
+            clientSecret: process.env.TWITTER_CLIENT_SECRET as string,
+        }),
         CredentialsProvider({
-            // name: "Credentials",
-            // type
-            // credentials: 
-            // {
-                // username: {
-                //     label: "User name",
-                //     placeholder: "Enter Username",
-                //     type: "text"
-                // },
-                // password: {
-                //     label: "Password",
-                //     placeholder: "Enter Password",
-                //     type: "password"
-                // }
-            // },
-            async authorize(credentials) {
-                console.log("dfgerthtrjytkj", credentials);
-                
-                const admin = { name: "Ravi", password: "123", role: "admin" }
-                const manager = { name: "Neni", password: "123", role: "manager" }
-                if (credentials?.username === admin.name && credentials?.password === admin.password) {
-                    return admin
-                } else if (credentials?.username === manager.name && credentials?.password === manager.password) {
-                    return manager
-                } else {
-                    return {name: credentials?.username, password: credentials?.password, role: "user"}
-                }
-            },
+            async authorize(credentials){
+                return 
+            }
         })
     ],
     callbacks: {
